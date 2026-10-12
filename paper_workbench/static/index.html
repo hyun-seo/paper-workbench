@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Paper Workbench</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- 서재: 논문 추가 + 목록 -->
+  <main id="library" hidden>
+    <h1>Paper Workbench</h1>
+    <nav class="nav">
+      <a href="#/" data-view="library">논문</a>
+      <a href="#/overview" data-view="overview">종합</a>
+      <a href="#/graph" data-view="graph">지도</a>
+      <a href="#/concepts" data-view="concepts">개념</a>
+      <a href="/api/library.md" class="download" title="논문별 요약·개념·노트와 개념 색인을 Markdown 한 파일로 저장합니다">전체 정리 내려받기 (.md)</a>
+    </nav>
+    <p class="inbox">PDF를 이 폴더에 넣으면 자동으로 추가됩니다: <code id="inbox-dir"></code></p>
+    <ul id="inbox-errors"></ul>
+    <form id="add-form">
+      <input type="url" id="add-url" placeholder="또는 논문 링크 (arXiv, PDF 직링크)">
+      <button type="submit">링크로 추가</button>
+    </form>
+    <p id="add-status" class="status"></p>
+    <ul id="paper-list"></ul>
+  </main>
+
+  <!-- 개념 색인: 여러 논문을 잇는 개념들 -->
+  <main id="concepts" hidden>
+    <h1>Paper Workbench</h1>
+    <nav class="nav">
+      <a href="#/" data-view="library">논문</a>
+      <a href="#/overview" data-view="overview">종합</a>
+      <a href="#/graph" data-view="graph">지도</a>
+      <a href="#/concepts" data-view="concepts">개념</a>
+      <a href="/api/library.md" class="download" title="논문별 요약·개념·노트와 개념 색인을 Markdown 한 파일로 저장합니다">전체 정리 내려받기 (.md)</a>
+    </nav>
+    <p id="concepts-status" class="status"></p>
+    <div id="concept-list"></div>
+  </main>
+
+  <!-- 종합: 서재 전체를 꿰는 주제·관계·비교·아이디어 -->
+  <main id="overview" hidden>
+    <h1>Paper Workbench</h1>
+    <nav class="nav">
+      <a href="#/" data-view="library">논문</a>
+      <a href="#/overview" data-view="overview">종합</a>
+      <a href="#/graph" data-view="graph">지도</a>
+      <a href="#/concepts" data-view="concepts">개념</a>
+      <a href="/api/library.md" class="download" title="종합, 논문별 요약·개념·노트, 개념 색인을 Markdown 한 파일로 저장합니다">전체 정리 내려받기 (.md)</a>
+    </nav>
+    <p id="overview-status" class="status"></p>
+    <div id="overview-body"></div>
+  </main>
+
+  <!-- 지도: 논문과 개념의 연결 -->
+  <main id="graph" hidden>
+    <h1>Paper Workbench</h1>
+    <nav class="nav">
+      <a href="#/" data-view="library">논문</a>
+      <a href="#/overview" data-view="overview">종합</a>
+      <a href="#/graph" data-view="graph">지도</a>
+      <a href="#/concepts" data-view="concepts">개념</a>
+      <a href="/api/library.md" class="download" title="종합, 논문별 요약·개념·노트, 개념 색인을 Markdown 한 파일로 저장합니다">전체 정리 내려받기 (.md)</a>
+    </nav>
+    <div class="graph-bar">
+      <label><input type="checkbox" id="graph-concepts" checked> 개념 보기</label>
+      <label><input type="checkbox" id="graph-shared"> 여러 논문에 걸친 개념만</label>
+      <span id="graph-legend"></span>
+      <span id="graph-status" class="status"></span>
+    </div>
+    <div class="graph-body">
+      <svg id="graph-svg" role="img" aria-label="논문과 개념의 연결 지도"></svg>
+      <aside id="graph-info"></aside>
+    </div>
+    <div id="graph-tip" hidden></div>
+  </main>
+
+  <!-- 리더: 원본 | 번역 | (노트) -->
+  <div id="reader" hidden>
+    <header>
+      <a href="#/" class="back">← 목록</a>
+      <span id="paper-title"></span>
+      <span id="progress" class="status"></span>
+      <button id="retry" hidden>실패한 문단 다시 번역</button>
+      <label><input type="checkbox" id="sync" checked> 스크롤 동기화</label>
+      <a id="export" title="노트와 질문·답변을 Markdown 파일로 저장합니다">내보내기</a>
+      <button id="capture" title="원본 PDF에서 수식·그림 영역을 드래그해 질문에 첨부합니다">영역 선택</button>
+      <button id="toggle-side">노트 · 질문</button>
+    </header>
+    <div id="panes">
+      <section id="pdf-pane" aria-label="원본"></section>
+      <section id="tr-pane" aria-label="번역본"></section>
+      <section id="side-pane" hidden>
+        <div class="tabs">
+          <button data-tab="summary">요약</button>
+          <button data-tab="note">노트</button>
+          <button data-tab="chat">질문</button>
+          <span id="note-status" class="status"></span>
+        </div>
+        <div id="tab-summary"></div>
+        <div id="tab-note">
+          <textarea id="note" placeholder="이 논문에 대한 메모를 적어 두세요. 자동 저장됩니다."></textarea>
+        </div>
+        <div id="tab-chat">
+          <div id="chat-log"></div>
+          <div id="chat-attach" hidden></div>
+          <form id="chat-form">
+            <textarea id="chat-input" rows="2" placeholder="논문에 대해 질문하세요 (Enter 전송, Shift+Enter 줄바꿈)"></textarea>
+            <div class="chat-actions">
+              <button type="button" id="chat-clear">대화 지우기</button>
+              <button type="submit" id="chat-send">보내기</button>
+            </div>
+          </form>
+        </div>
+      </section>
+    </div>
+  </div>
+  <button id="ask-selection" hidden>이 부분 질문하기</button>
+
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

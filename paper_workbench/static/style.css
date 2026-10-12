@@ -1,0 +1,272 @@
+:root {
+  --bg: #f6f5f1;
+  --panel: #ffffff;
+  --text: #1f2328;
+  --muted: #6b7280;
+  --line: #dcd9d0;
+  --accent: #2f5fd0;
+  --hl: rgba(255, 200, 0, 0.35);
+  --danger: #b42318;
+  /* 주제 색 (범주형, 고정 순서. 밝은·어두운 배경 각각 검증한 값) */
+  --theme-1: #2a78d6;
+  --theme-2: #eb6834;
+  --theme-3: #1baf7a;
+  --theme-4: #eda100;
+  --theme-5: #e87ba4;
+  --theme-6: #008300;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #17181b;
+    --panel: #202226;
+    --text: #e6e6e6;
+    --muted: #9aa0a6;
+    --line: #34373d;
+    --accent: #8ab4f8;
+    --hl: rgba(255, 210, 60, 0.4);
+    --danger: #f97066;
+    --theme-1: #3987e5;
+    --theme-2: #d95926;
+    --theme-3: #199e70;
+    --theme-4: #c98500;
+    --theme-5: #d55181;
+    --theme-6: #008300;
+  }
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font: 15px/1.6 system-ui, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+}
+button, input, textarea { font: inherit; color: inherit; }
+button {
+  padding: 4px 12px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--panel);
+  cursor: pointer;
+}
+button:hover { border-color: var(--accent); }
+.status { color: var(--muted); font-size: 13px; }
+.status.error { color: var(--danger); }
+
+/* 서재 */
+#library, #concepts { max-width: 760px; margin: 0 auto; padding: 40px 16px; }
+#overview { max-width: 1080px; margin: 0 auto; padding: 40px 16px; }
+#library h1, #concepts h1, #overview h1 { font-size: 22px; margin: 0 0 12px; }
+
+/* 종합 */
+#overview-body h2 { margin: 30px 0 10px; font-size: 16px; }
+#overview-body .lead { margin: 0; padding: 14px 16px; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; line-height: 1.75; }
+#overview-body a, .ref { color: var(--accent); text-decoration: none; cursor: pointer; }
+.swatch { display: inline-block; width: 10px; height: 10px; margin-right: 6px; border-radius: 3px; background: var(--muted); }
+.themes { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 10px; }
+.theme, .idea, .relation { padding: 12px 14px; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; font-size: 14px; }
+.theme h3, .idea h3 { margin: 0 0 4px; font-size: 15px; }
+.theme p, .idea p { margin: 0 0 8px; color: var(--muted); }
+.theme ul, .order { margin: 0; padding-left: 18px; }
+.theme li, .order li { margin-bottom: 5px; }
+.table-wrap { overflow-x: auto; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; }
+.compare { width: 100%; border-collapse: collapse; font-size: 13px; }
+.compare th, .compare td { padding: 9px 10px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); min-width: 128px; }
+.compare tr:last-child td { border-bottom: 0; }
+.compare thead th { color: var(--muted); font-weight: 600; white-space: nowrap; }
+.compare th:first-child, .compare td:first-child { position: sticky; left: 0; min-width: 170px; max-width: 200px; background: var(--panel); font-weight: 600; }
+.relations, .ideas { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 10px; }
+.relation .pair { font-weight: 600; }
+.relation .kind { display: inline-block; margin: 4px 0; padding: 1px 8px; border: 1px solid var(--line); border-radius: 10px; color: var(--muted); font-size: 12px; }
+.relation p { margin: 0; }
+.idea .who { font-size: 13px; }
+.ask-library { display: flex; gap: 8px; margin-top: 10px; }
+.ask-library textarea { flex: 1; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); resize: vertical; }
+#library-log .msg.user { margin-left: 80px; }
+#library-clear { border-color: transparent; color: var(--muted); font-size: 13px; padding-left: 0; }
+.nav { display: flex; gap: 16px; align-items: baseline; margin-bottom: 20px; border-bottom: 1px solid var(--line); }
+.nav a { padding: 6px 2px; color: var(--muted); text-decoration: none; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+.nav a.on { color: var(--text); font-weight: 600; border-bottom-color: var(--accent); }
+.nav .download { margin-left: auto; color: var(--accent); font-size: 13px; }
+#paper-list .one-line { margin-top: 2px; color: var(--muted); font-size: 13px; }
+
+/* 지도 */
+#graph { height: 100%; display: flex; flex-direction: column; padding: 40px 24px 16px; }
+#graph h1 { font-size: 22px; margin: 0 0 12px; }
+.graph-bar { display: flex; flex-wrap: wrap; gap: 6px 18px; align-items: center; margin-bottom: 10px; font-size: 13px; }
+#graph-legend { display: inline-flex; flex-wrap: wrap; gap: 4px 14px; }
+.legend { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); }
+.legend.theme-key { cursor: pointer; }
+.legend.theme-key.on { color: var(--text); font-weight: 600; }
+.legend .mark { width: 12px; height: 12px; display: inline-block; border-radius: 3px; background: var(--muted); }
+.legend .mark.round { border-radius: 50%; }
+.legend .line { width: 22px; border-top: 3px solid var(--muted); display: inline-block; }
+.legend .line.thin { border-top-width: 1px; }
+.legend .line.dashed { border-top: 1px dashed var(--muted); }
+.graph-body { flex: 1; min-height: 0; display: flex; gap: 12px; }
+#graph-svg { flex: 1; min-width: 0; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; cursor: grab; touch-action: none; }
+#graph-svg .link { stroke: var(--muted); stroke-opacity: 0.35; stroke-width: 1; }
+#graph-svg .link.mentions, #graph-svg .link.concept-link { stroke-dasharray: 4 4; }
+#graph-svg .link.relation { stroke: var(--text); stroke-opacity: 0.55; stroke-width: 3; cursor: pointer; }
+#graph-svg .link.relation.selected { stroke: var(--accent); stroke-opacity: 1; }
+#graph-svg .link-hit { stroke: transparent; stroke-width: 14; cursor: pointer; }
+#graph-svg .node { cursor: pointer; }
+#graph-svg .node .shape { stroke: var(--panel); stroke-width: 2; fill: var(--muted); }
+#graph-svg .node.concept .shape { fill-opacity: 0.55; }
+#graph-svg .node text { fill: var(--text); font-size: 11px; paint-order: stroke; stroke: var(--panel); stroke-width: 3px; pointer-events: none; }
+#graph-svg .node.concept text { fill: var(--muted); }
+#graph-svg .node.paper text { font-size: 12px; font-weight: 600; }
+#graph-svg .dim { opacity: 0.1; }
+#graph-svg .node.selected .shape { stroke: var(--text); }
+#graph-info { flex: 0 0 320px; overflow-y: auto; padding: 12px 14px; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; font-size: 14px; }
+#graph-info h2 { margin: 0 0 6px; font-size: 15px; }
+#graph-info h3 { margin: 12px 0 4px; font-size: 13px; color: var(--muted); }
+#graph-info p { margin: 0 0 10px; color: var(--muted); }
+#graph-info ul { margin: 0; padding-left: 18px; }
+#graph-info li { margin-bottom: 6px; }
+#graph-info a { color: var(--accent); text-decoration: none; cursor: pointer; }
+#graph-tip { position: fixed; z-index: 20; max-width: 320px; padding: 6px 10px; border-radius: 6px; background: var(--text); color: var(--bg); font-size: 12px; pointer-events: none; }
+@media (max-width: 800px) {
+  .graph-body { flex-direction: column; }
+  #graph-info { flex-basis: 180px; }
+}
+
+/* 개념 색인 */
+.concept { margin-bottom: 10px; padding: 12px 14px; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; }
+.concept h2, .summary h3 { margin: 0; font-size: 15px; }
+.concept .count { margin-left: 6px; padding: 1px 7px; border-radius: 10px; background: var(--accent); color: var(--panel); font-size: 12px; font-weight: 400; }
+.concept p { margin: 4px 0 8px; color: var(--muted); font-size: 14px; }
+.concept ul, .summary ul { margin: 0; padding-left: 18px; font-size: 14px; }
+.concept li, .summary li { margin-bottom: 4px; }
+.concept a, .summary a { color: var(--accent); text-decoration: none; cursor: pointer; }
+.role { color: var(--muted); font-size: 12px; white-space: nowrap; }
+#add-form { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+#add-url {
+  flex: 1 1 260px;
+  padding: 6px 10px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--panel);
+}
+.inbox { margin: 0 0 12px; }
+.inbox code { padding: 2px 6px; border-radius: 4px; background: var(--panel); border: 1px solid var(--line); font-size: 13px; overflow-wrap: anywhere; }
+#inbox-errors { list-style: none; margin: 0 0 12px; padding: 0; color: var(--danger); font-size: 13px; }
+#paper-list { list-style: none; padding: 0; margin: 24px 0 0; }
+#paper-list li {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 12px 14px;
+  margin-bottom: 8px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+#paper-list a { flex: 1; min-width: 0; color: inherit; text-decoration: none; }
+#paper-list a:hover .title { color: var(--accent); }
+#paper-list .title { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#paper-list .empty { justify-content: center; color: var(--muted); }
+
+/* 리더 */
+#reader { height: 100%; display: flex; flex-direction: column; overflow: hidden; }
+[hidden] { display: none !important; }
+#reader header {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 8px 14px;
+  border-bottom: 1px solid var(--line);
+  background: var(--panel);
+  font-size: 14px;
+}
+.back, #export { color: var(--accent); text-decoration: none; white-space: nowrap; }
+#paper-title { flex: 1; min-width: 0; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#reader header label { white-space: nowrap; }
+
+#panes { flex: 1; min-height: 0; display: flex; }
+/* position: relative — KaTeX가 넣는 보이지 않는 absolute 요소가 패널 밖(문서 전체)을 늘리지 않게 패널 안에 가둔다 */
+#panes > section { position: relative; flex: 1 1 0; min-width: 0; overflow-y: auto; overscroll-behavior: contain; border-right: 1px solid var(--line); }
+#panes > section:last-child { border-right: 0; }
+#panes > #side-pane { flex: 0 0 360px; display: flex; flex-direction: column; overflow: hidden; background: var(--panel); }
+
+/* 원본 PDF */
+#pdf-pane { padding: 12px; }
+.pdf-page { position: relative; margin: 0 auto 12px; background: #fff; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2); }
+.pdf-page canvas { display: block; width: 100%; height: 100%; }
+/* PDF.js가 글자 폭을 재려고 body 끝에 붙이는 캔버스. 그대로 두면 문서가 화면보다 길어진다 */
+.hiddenCanvasElement { position: absolute; top: 0; left: 0; width: 0; height: 0; display: none; }
+/* PDF.js 텍스트 레이어: 캔버스 위에 투명한 글자를 겹쳐 드래그 선택이 되게 한다 */
+.textLayer { position: absolute; inset: 0; overflow: clip; line-height: 1; text-align: initial; text-size-adjust: none; forced-color-adjust: none; transform-origin: 0 0; }
+.textLayer :is(span, br) { position: absolute; color: transparent; white-space: pre; cursor: text; transform-origin: 0% 0%; }
+.textLayer ::selection { background: rgba(47, 95, 208, 0.3); }
+#pdf-pane.capturing .textLayer :is(span, br) { cursor: crosshair; }
+.pdf-hl { position: absolute; background: var(--hl); border-radius: 2px; pointer-events: none; mix-blend-mode: multiply; }
+
+/* 번역본 */
+#tr-pane { padding: 4px 20px 40px; background: var(--panel); }
+.page-mark {
+  margin: 20px 0 8px;
+  padding-bottom: 2px;
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 12px;
+}
+.block { margin: 0 -8px 14px; padding: 4px 8px; border-radius: 6px; cursor: pointer; }
+/* 번역문은 문장마다 줄을 바꾸고 사이를 띄운다 */
+.sentence { display: block; }
+.sentence + .sentence { margin-top: 0.55em; }
+.block:hover { background: var(--bg); }
+.block.active { background: var(--hl); }
+/* 수식·그림·표: 원본 영역을 잘라 보여 준다 */
+.block.figure, .block.formula { text-align: center; }
+.block.figure img, .block.formula img { max-width: 100%; border-radius: 4px; background: #fff; }
+.block.formula img { max-height: 140px; }
+.block .katex { font-size: 1.05em; }
+.block.pending, .block.skipped { color: var(--muted); }
+.block.pending::after { content: " · 번역 중…"; font-size: 12px; }
+.block.failed { color: var(--muted); }
+.block.failed::after { content: " · 번역 실패"; color: var(--danger); font-size: 12px; }
+
+/* 원본에서 영역 선택 */
+button.on { border-color: var(--accent); color: var(--accent); }
+#pdf-pane.capturing { cursor: crosshair; user-select: none; touch-action: none; }
+.capture-box { position: absolute; border: 2px solid var(--accent); background: rgba(47, 95, 208, 0.15); pointer-events: none; }
+#ask-selection { position: fixed; z-index: 10; background: var(--accent); border-color: var(--accent); color: #fff; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25); }
+
+/* 사이드 패널: 노트 / 질문 */
+.tabs { display: flex; gap: 4px; align-items: center; padding: 6px 8px; border-bottom: 1px solid var(--line); }
+.tabs button { border-color: transparent; background: none; font-weight: 600; font-size: 14px; }
+.tabs .status { margin-left: auto; padding-right: 4px; }
+#tab-note, #tab-chat { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+#tab-summary { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 12px; font-size: 14px; }
+.summary .one-line { margin: 0 0 12px; font-weight: 600; }
+.summary h3 { margin: 14px 0 4px; font-size: 13px; color: var(--muted); }
+.summary p { margin: 0; }
+.summary .redo { margin-top: 16px; border-color: transparent; color: var(--muted); font-size: 13px; padding-left: 0; }
+#note { flex: 1; width: 100%; padding: 12px; border: 0; outline: 0; resize: none; background: var(--panel); line-height: 1.6; }
+
+#chat-log { position: relative; flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 12px; }
+#chat-log .empty { color: var(--muted); font-size: 13px; }
+.msg { margin-bottom: 12px; padding: 8px 10px; border-radius: 8px; font-size: 14px; white-space: pre-wrap; overflow-wrap: anywhere; }
+.msg.user { margin-left: 24px; background: var(--bg); }
+.msg.assistant { border: 1px solid var(--line); }
+.msg.pending, .msg.error { color: var(--muted); }
+.msg.error { color: var(--danger); }
+.msg .katex-display { overflow-x: auto; overflow-y: hidden; padding: 2px 0; }
+.quote { margin: 0 0 6px; padding-left: 8px; border-left: 3px solid var(--line); color: var(--muted); font-size: 13px; white-space: pre-wrap; }
+.msg img, #chat-attach img { display: block; max-width: 100%; max-height: 160px; margin-bottom: 6px; border: 1px solid var(--line); border-radius: 4px; background: #fff; }
+#chat-attach { margin: 0 12px; max-height: 200px; overflow-y: auto; }
+.attach-item { position: relative; margin-bottom: 6px; padding: 8px 28px 2px 8px; border: 1px dashed var(--line); border-radius: 8px; }
+.attach-item .quote { max-height: 3.2em; overflow: hidden; }
+.attach-item img { max-height: 80px; }
+.attach-item button { position: absolute; top: 4px; right: 4px; padding: 0 6px; border: 0; background: none; }
+#chat-form { padding: 8px 12px 12px; }
+#chat-input { width: 100%; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); resize: vertical; }
+.chat-actions { display: flex; justify-content: space-between; margin-top: 6px; }
+#chat-clear { border-color: transparent; color: var(--muted); font-size: 13px; }
+
+@media (max-width: 800px) {
+  #panes { flex-direction: column; }
+  #panes > section { border-right: 0; border-bottom: 1px solid var(--line); }
+  #panes > #side-pane { flex-basis: 280px; }
+}
